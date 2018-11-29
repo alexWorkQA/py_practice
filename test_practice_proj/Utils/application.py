@@ -1,20 +1,12 @@
-import os
+from selenium.webdriver.support.wait import WebDriverWait
 
-from appium import webdriver
-
-
-class Application():
-
-    def initialization(self):
-        desired_caps = {
-            'platformName': 'Android',
-            'deviceName': 'Redmi',
-            'app': self.PATH('../../apks/TapShop.apk'),
+from Helpers.driver_helper import get_appiumdriver
 
 
-        }
-        return webdriver.Remote('http://', desired_caps)
+class Application:
 
-    def PATH(p):
-        return os.path.abspath(
-            os.path.join(os.path.dirname(__file__), p))
+    def __init__(self):
+        self.driver = get_appiumdriver()
+
+    def complete(self):
+        self.driver.quit()

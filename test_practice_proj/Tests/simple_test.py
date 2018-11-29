@@ -1,28 +1,21 @@
-import os
-from time import sleep
-
 import pytest
 import unittest
-from appium import webdriver
+from Utils.application import Application
 
 
-class simple_android_test(unittest.TestCase):
+class TestAndroidSimple():
 
-    def setUp(self):
-        desired_caps = {
-            'platformName': 'Android',
-            'deviceName': 'Redmi',
-            'app': '/home/osboxes/py_practice/test_practice_proj/apks/TapShop.apk',
-            'apkPackage': 'com.tapshop.app.mobile'
-        }
-        self.driver = webdriver.Remote('http://0.0.0.0:4723/wd/hub', desired_caps)
+    @pytest.fixture(scope='function')
+    def app(self, request):
+        app = Application()
 
-    def tearDown(self):
-        self.driver.quit()
+        def fin():
+            app.complete()
 
-    def test_launch_app_test(self):
-        assert False
+        request.addfinalizer(fin)
 
-    def PATH(p):
-        return os.path.abspath(
-            os.path.join(os.path.dirname(__file__), p))
+        return app
+
+    def test_launch_app_test(self, app):
+
+        assert 3 == 1
